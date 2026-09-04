@@ -94,7 +94,7 @@ interface DrawingElement {
 
     registerToolSafe({
       name: 'lay_contour',
-      description: 'Draw a contour line on the courtyard sheet. Accepts an array of points forming a polyline or a bounding box (4 corners). Use this to define elevation changes or plot boundaries.',
+      description: 'Draw a landscape contour/topo or plot boundary polyline. Do NOT use this for freehand illustrations (animals, icons, doodles) — use draw_stroke instead. Labels are off by default.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -122,7 +122,7 @@ interface DrawingElement {
           type: 'contour',
           points,
           color: '#8B4513',
-          label: 'contour'
+          label: input.label || undefined
         }]);
         return { content: [{ type: 'text', text: `Laid contour with ${points.length} points` }] };
       }
@@ -158,7 +158,7 @@ interface DrawingElement {
           type: 'water',
           points,
           color: '#4169E1',
-          label: 'water'
+          label: input.label || undefined
         }]);
         return { content: [{ type: 'text', text: `Laid water feature with ${points.length} points` }] };
       }
@@ -197,7 +197,7 @@ interface DrawingElement {
           type: 'planting',
           points: circlePoints,
           color: '#228B22',
-          label: kind
+          label: input.show_label ? kind : undefined
         }]);
         return { content: [{ type: 'text', text: `Placed ${kind} at (${x}, ${y})` }] };
       }
@@ -233,9 +233,49 @@ interface DrawingElement {
           type: 'path',
           points,
           color: '#808080',
-          label: 'path'
+          label: input.label || undefined
         }]);
         return { content: [{ type: 'text', text: `Laid path with ${points.length} points` }] };
+      }
+    });
+
+
+    registerToolSafe({
+      name: 'draw_stroke',
+      description: 'Draw an unlabeled freehand stroke on the sheet (same as a human mouse gesture). Use this for illustrations, animals, icons, or any sketch that should NOT show a text label. Prefer this over lay_contour for drawings.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          points: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                x: { type: 'number', description: 'X coordinate (0-800)' },
+                y: { type: 'number', description: 'Y coordinate (0-600)' }
+              },
+              required: ['x', 'y']
+            },
+            description: 'Array of points forming the freehand stroke'
+          },
+          color: {
+            type: 'string',
+            description: 'Optional stroke color (CSS color). Default dark gray.'
+          }
+        },
+        required: ['points']
+      },
+      execute: async (input: any) => {
+        const points = input.points || [];
+        if (points.length < 2) {
+          return { content: [{ type: 'text', text: 'Need at least 2 points for a stroke' }] };
+        }
+        setElements(prev => [...prev, {
+          type: 'user-drawing',
+          points,
+          color: input.color || '#333'
+        }]);
+        return { content: [{ type: 'text', text: `Drew unlabeled stroke with ${points.length} points` }] };
       }
     });
 
@@ -378,7 +418,7 @@ interface DrawingElement {
       </div>
 
       <div className="mt-8 text-xs text-gray-400">
-        <p>WebMCP tools: lay_contour, lay_water, lay_planting, lay_path, clear_sheet, export_sheet</p>
+        <p>WebMCP tools: draw_stroke, lay_contour, lay_water, lay_planting, lay_path, clear_sheet, export_sheet</p>
       </div>
      </div>
    );
