@@ -4,7 +4,9 @@ A collaborative courtyard sketch sheet that enables humans and AI agents to work
  
 ## Live Demo
  
-🔗 **[https://hangable.pages.dev](https://hangable.pages.dev)** (deployed once available)
+🔗 **[https://johnnywang8802.github.io/hangable/](https://johnnywang8802.github.io/hangable/)**
+
+**Repository**: https://github.com/JohnnyWang8802/hangable
 
 ## What is Hangable?
 

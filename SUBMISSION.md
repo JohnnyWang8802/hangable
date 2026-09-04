@@ -203,7 +203,7 @@ Once deployed, users open the app in ChatGPT's in-app browser or any WebMCP-capa
 
 ## Try It
 
-🔗 **[https://hangable.pages.dev](https://hangable.pages.dev)**
+🔗 **[https://johnnywang8802.github.io/hangable/](https://johnnywang8802.github.io/hangable/)**
 
 1. Open in ChatGPT or Chrome 149+ with `chrome://flags/#enable-webmcp-testing`
 2. Draw some rough shapes with your mouse
@@ -216,5 +216,5 @@ Once deployed, users open the app in ChatGPT's in-app browser or any WebMCP-capa
 **Submission for OpenAI WebMCP Challenge (September 2026)**
 
 **Author**: Johnny Wang  
-**Repository**: https://github.com/your-username/hangable  
+**Repository**: https://github.com/JohnnyWang8802/hangable  
 **License**: MIT
