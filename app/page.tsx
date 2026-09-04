@@ -49,12 +49,7 @@ interface DrawingElement {
       }
       ctx.stroke();
 
-      if (element.label && element.points.length > 0) {
-        const midPoint = element.points[Math.floor(element.points.length / 2)];
-        ctx.fillStyle = element.color || '#333';
-        ctx.font = '12px sans-serif';
-        ctx.fillText(element.label, midPoint.x + 5, midPoint.y - 5);
-      }
+      // No text labels on the sheet — agents kept stamping "contour" on illustrations.
     });
 
     if (currentPath.length > 0) {
@@ -94,7 +89,7 @@ interface DrawingElement {
 
     registerToolSafe({
       name: 'lay_contour',
-      description: 'Draw a landscape contour/topo or plot boundary polyline. Do NOT use this for freehand illustrations (animals, icons, doodles) — use draw_stroke instead. Labels are off by default.',
+      description: 'LANDSCAPE ONLY: elevation contour or lot boundary polyline for a courtyard plan. NEVER use for animals, chicks, icons, cartoons, or freehand art — those MUST use draw_stroke. Drawing with this tool for art is incorrect.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -122,7 +117,7 @@ interface DrawingElement {
           type: 'contour',
           points,
           color: '#8B4513',
-          label: input.label || undefined
+          label: undefined
         }]);
         return { content: [{ type: 'text', text: `Laid contour with ${points.length} points` }] };
       }
@@ -158,7 +153,7 @@ interface DrawingElement {
           type: 'water',
           points,
           color: '#4169E1',
-          label: input.label || undefined
+          label: undefined
         }]);
         return { content: [{ type: 'text', text: `Laid water feature with ${points.length} points` }] };
       }
@@ -197,7 +192,7 @@ interface DrawingElement {
           type: 'planting',
           points: circlePoints,
           color: '#228B22',
-          label: input.show_label ? kind : undefined
+          label: undefined
         }]);
         return { content: [{ type: 'text', text: `Placed ${kind} at (${x}, ${y})` }] };
       }
@@ -233,7 +228,7 @@ interface DrawingElement {
           type: 'path',
           points,
           color: '#808080',
-          label: input.label || undefined
+          label: undefined
         }]);
         return { content: [{ type: 'text', text: `Laid path with ${points.length} points` }] };
       }
@@ -242,7 +237,7 @@ interface DrawingElement {
 
     registerToolSafe({
       name: 'draw_stroke',
-      description: 'Draw an unlabeled freehand stroke on the sheet (same as a human mouse gesture). Use this for illustrations, animals, icons, or any sketch that should NOT show a text label. Prefer this over lay_contour for drawings.',
+      description: 'PRIMARY drawing tool. Freehand unlabeled stroke (same as human mouse). ALWAYS use this for animals, chicks, icons, doodles, and any illustration. Do not use lay_contour for those.',
       inputSchema: {
         type: 'object',
         properties: {
