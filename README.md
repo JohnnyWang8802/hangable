@@ -53,7 +53,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Option 1: ChatGPT In-App Browser
  
 1. Open ChatGPT (requires Plus or Pro subscription with browsing enabled)
-2. Ask ChatGPT to open the deployed URL: "Open https://hangable.pages.dev"
+2. Ask ChatGPT to open the deployed URL: "Open https://johnnywang8802.github.io/hangable/"
 3. Give instructions like: "Lay a contour around the edges" or "Add a water feature flowing from top to bottom"
 4. ChatGPT will discover and call the registered tools automatically
  
